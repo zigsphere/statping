@@ -1,4 +1,4 @@
-version: '2.3'
+version: '3.8'
 
 services:
   statping:
@@ -8,9 +8,67 @@ services:
     volumes:
       - statping_data:/app
     environment:
-      DB_CONN: sqlite
+      DB_CONN: postgres
+      PORT: 5000
+      DB_HOST: db
+      DB_USER: statping
+      DB_PASS: averystrongpassword
+      DB_PORT: 5432
+      DB_DATABASE: statping
     ports:
-      - 8080:8080
+      - 5000:5000
+    networks:
+      - statping-net
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: averystrongpassword
+      POSTGRES_USER: statping
+      POSTGRES_DB: statping
+    networks:
+      - statping-net
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - statping-net
+    depends_on:
+      - statping
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - 3000:3000
+    networks:
+      - statping-net
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
 
 volumes:
   statping_data:
+  pg_data:
+  prometheus_data:
+  grafana-storage:
+
+networks:
+  statping-net:

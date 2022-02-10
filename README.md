@@ -6,10 +6,10 @@
 <a href="https://github.com/statping/statping/wiki">View Wiki</a> | <a href="https://demo.statping.com">Demo</a> | <a href="https://itunes.apple.com/us/app/apple-store/id1445513219">iPhone</a> | <a href="https://play.google.com/store/apps/details?id=com.statping">Android</a> <br> <a href="http://docs.statping.com">API</a> | <a href="https://github.com/statping/statping/wiki/Docker">Docker</a> | <a href="https://github.com/statping/statping/wiki/AWS-EC2">EC2</a> | <a href="https://github.com/statping/statping/wiki/Mac">Mac</a> | <a href="https://github.com/statping/statping/wiki/Linux">Linux</a> | <a href="https://github.com/statping/statping/wiki/Windows">Windows</a>
 </p>
 
-# Statping - Status Page & Monitoring Server
+# Statping + Prometheus + Grafana - Status Page & Monitoring Server
 An easy to use Status Page for your websites and applications. Statping will automatically fetch the application and render a beautiful status page with tons of features for you to build an even better status page. This Status Page generator allows you to use MySQL, Postgres, or SQLite on multiple operating systems.
 
-![Master Release](https://github.com/statping/statping/workflows/Master%20Release/badge.svg?branch=master) [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/statping/statping) [![Slack](https://slack.statping.com/badge.svg)](https://slack.statping.com) [![](https://images.microbadger.com/badges/image/statping/statping.svg)](https://microbadger.com/images/statping/statping) [![Docker Pulls](https://img.shields.io/docker/pulls/statping/statping.svg)](https://hub.docker.com/r/statping/statping/builds/)
+This is a revision of Statping, but with prometheus and Grafana added as well as a Postgresql database as the storage solution. To use prometheus, you will need to get an API token from Statping and update the prometheus/prometheus.yml file.
 
 <br><br>
 <img align="left" width="320" height="235" src="https://img.cjx.io/statupsiterun.gif">
